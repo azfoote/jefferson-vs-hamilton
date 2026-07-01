@@ -1,0 +1,96 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Jefferson vs. Hamilton Classifier</title>
+  <link rel="stylesheet" href="{{ url_for('static', filename='css/style.css') }}" />
+</head>
+<body>
+  <div class="page">
+    <header class="hero">
+      <div class="hero-overlay"></div>
+      <div class="hero-content">
+        <h1>Jefferson vs. Hamilton</h1>
+        <p>Upload a text file to estimate whether it was written by Thomas Jefferson or Alexander Hamilton.</p>
+      </div>
+    </header>
+
+    <main class="main">
+      <section class="portraits-section">
+        <div class="portrait">
+          <img src="{{ url_for('static', filename='images/hamilton.png') }}" alt="Portrait of Alexander Hamilton" />
+          <h2>Alexander Hamilton</h2>
+        </div>
+        <div class="portrait">
+          <img src="{{ url_for('static', filename='images/jefferson.png') }}" alt="Portrait of Thomas Jefferson" />
+          <h2>Thomas Jefferson</h2>
+        </div>
+      </section>
+
+      <section class="upload-card">
+        <h2>Classify a Document</h2>
+        <p class="instructions">
+          Choose a text file containing the document you want to classify, then click
+          <strong>Analyze Document</strong>.
+        </p>
+
+        <form class="upload-form" action="{{ url_for('predict') }}" method="post" enctype="multipart/form-data">
+          <label class="file-input-label">
+            <span id="file-name-label">Select text file</span>
+            <span id="file-check-icon" class="file-check-icon" aria-hidden="true">✓</span>
+            <input id="file-input" type="file" name="file" accept=".txt,text/plain" required />
+          </label>
+          <button class="primary-button" type="submit">Analyze Document</button>
+        </form>
+
+        {% if error %}
+        <div class="error-card" role="alert">
+          <span class="error-title">Unable to classify</span>
+          <p class="error-message">{{ error }}</p>
+        </div>
+        {% endif %}
+
+        {% if prediction is defined and confidence is defined %}
+        <div class="result-card">
+          <div class="result-badge">
+            <span class="result-label">Predicted Author</span>
+            <span class="result-value">{{ prediction }}</span>
+          </div>
+          <p class="result-confidence">
+            Model confidence: <strong>{{ (confidence * 100) | round(1) }}%</strong>
+          </p>
+          <p class="result-disclaimer">
+            This is a probabilistic estimate based on language patterns learned from historical texts.
+          </p>
+        </div>
+        {% endif %}
+      </section>
+    </main>
+
+    <footer class="footer">
+      <span></span>
+    </footer>
+  </div>
+  <script>
+    (function () {
+      var input = document.getElementById("file-input");
+      var label = document.getElementById("file-name-label");
+      if (!input || !label) return;
+
+      input.addEventListener("change", function () {
+        if (input.files && input.files.length > 0) {
+          label.textContent = input.files[0].name;
+          var icon = document.getElementById("file-check-icon");
+          if (icon) icon.classList.add("visible");
+        } else {
+          label.textContent = "Select text file";
+          var iconHidden = document.getElementById("file-check-icon");
+          if (iconHidden) iconHidden.classList.remove("visible");
+        }
+      });
+    })();
+  </script>
+</body>
+</html>
+

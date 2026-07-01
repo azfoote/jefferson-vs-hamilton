@@ -14,6 +14,11 @@ import time
 import random
 import os
 
+BASE_DATA_DIR = os.environ.get(
+    "JH_DATA_DIR",
+    os.path.join(os.path.dirname(os.path.abspath(__file__)), "data")
+)
+
 #this referenced json file contains metadata information regarding the ids of
 #the documents contained within the founders online database.
 #It can be used to find the id info of letters of interest, in this case all 
@@ -112,15 +117,15 @@ def remove_files(file_path, num_files):
 #At the time of writing, there are two folders that contain all jefferson and hamilton
 #text files, respectively.
 
-source_jeff = '/Users/aaronfoote/Documents/Data Science/Jefferson_Hamilton_Classification/Jefferson'
-source_ham = '/Users/aaronfoote/Documents/Data Science/Jefferson_Hamilton_Classification/Hamilton'
+source_jeff = os.path.join(BASE_DATA_DIR, "Jefferson")
+source_ham = os.path.join(BASE_DATA_DIR, "Hamilton")
 
-dest_train_jeff = '/Users/aaronfoote/Documents/Data Science/Jefferson_Hamilton_Classification/train/Jefferson'
-dest_train_ham = '/Users/aaronfoote/Documents/Data Science/Jefferson_Hamilton_Classification/train/Hamilton'
-dest_val_jeff = '/Users/aaronfoote/Documents/Data Science/Jefferson_Hamilton_Classification/val/Jefferson'
-dest_val_ham = '/Users/aaronfoote/Documents/Data Science/Jefferson_Hamilton_Classification/val/Hamilton'
-dest_test_jeff = '/Users/aaronfoote/Documents/Data Science/Jefferson_Hamilton_Classification/test/Jefferson'
-dest_test_ham = '/Users/aaronfoote/Documents/Data Science/Jefferson_Hamilton_Classification/test/Hamilton'
+dest_train_jeff = os.path.join(BASE_DATA_DIR, "train", "Jefferson")
+dest_train_ham = os.path.join(BASE_DATA_DIR, "train", "Hamilton")
+dest_val_jeff = os.path.join(BASE_DATA_DIR, "val", "Jefferson")
+dest_val_ham = os.path.join(BASE_DATA_DIR, "val", "Hamilton")
+dest_test_jeff = os.path.join(BASE_DATA_DIR, "test", "Jefferson")
+dest_test_ham = os.path.join(BASE_DATA_DIR, "test", "Hamilton")
 
 def reorg_files(source, destination, num_files):
     allfiles = os.listdir(source)
