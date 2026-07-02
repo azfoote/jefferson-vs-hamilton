@@ -132,8 +132,7 @@ binary_2gram_test_ds = vectorize(test_ds)
 
 
 def get_model(max_tokens=MAX_TOKENS):
-    # A slightly larger dense model with regularization often performs better
-    # than a single tiny hidden layer on this kind of bag-of-ngrams input.
+    # A dense model with regularization and dropout layers works well in general with bag of n-grams input such as this.
     inputs = keras.Input(shape=(max_tokens,))
     x = layers.Dense(128, activation="relu", kernel_regularizer=regularizers.l2(1e-4))(inputs)
     x = layers.Dropout(0.4)(x)
