@@ -82,7 +82,4 @@ export JH_DATA_DIR="/path/to/data"
 - The app expects `classification_model.keras` and `vectorizer_vocabulary.txt` in the repo root.
 - This is a historical text classification experiment and should be treated as probabilistic, not definitive authorship proof.
 
-## Suggested LinkedIn description
-
-"Built an end-to-end NLP web app with Flask and TensorFlow to classify historical writings as Thomas Jefferson vs Alexander Hamilton. Implemented text preprocessing, model serving, UI design, and robust error handling for real-world file uploads."
 
